@@ -1,0 +1,151 @@
+// 1. Bubble Sort
+public void BubbleSort(int[] arr)
+{
+    int n = arr.Length;
+    for (int i = 0; i < n - 1; i++)
+    {
+        for (int j = 0; j < n - i - 1; j++)
+        {
+            if (arr[j] > arr[j + 1])
+            {
+                
+                int temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
+            }
+        }
+    }
+}
+
+///////////
+// 2. Сортировка вставками
+public void InsertionSort(int[] arr)
+{
+    int n = arr.Length;
+    for (int i = 1; i < n; i++)
+    {
+        int key = arr[i];
+        int j = i - 1;
+
+        
+        while (j >= 0 && arr[j] > key)
+        {
+            arr[j + 1] = arr[j];
+            j--;
+        }
+        arr[j + 1] = key;
+    }
+}
+
+//////////////
+// 3. Быстрая сортировка
+public void QuickSort(int[] arr, int low, int high)
+{
+    if (low < high)
+    {
+        int pi = Partition(arr, low, high);
+
+        QuickSort(arr, low, pi - 1);  
+        QuickSort(arr, pi + 1, high); 
+    }
+}
+
+private int Partition(int[] arr, int low, int high)
+{
+    int pivot = arr[high]; 
+    int i = (low - 1); 
+
+    for (int j = low; j < high; j++)
+    {
+        if (arr[j] < pivot)
+        {
+            i++;
+           
+            int temp = arr[i];
+            arr[i] = arr[j];
+            arr[j] = temp;
+        }
+    }
+
+    
+    int temp1 = arr[i + 1];
+    arr[i + 1] = arr[high];
+    arr[high] = temp1;
+
+    return i + 1;
+}
+
+////////
+// 4. Сортировка слиянием
+
+public void MergeSort(int[] arr)
+{
+    if (arr.Length < 2)
+        return;
+
+    int mid = arr.Length / 2;
+    int[] left = new int[mid];
+    int[] right = new int[arr.Length - mid];
+
+    Array.Copy(arr, 0, left, 0, mid);
+    Array.Copy(arr, mid, right, 0, arr.Length - mid);
+
+    MergeSort(left);
+    MergeSort(right);
+    Merge(arr, left, right);
+}
+
+private void Merge(int[] arr, int[] left, int[] right)
+{
+    int i = 0, j = 0, k = 0;
+
+    while (i < left.Length && j < right.Length)
+    {
+        if (left[i] <= right[j])
+        {
+            arr[k++] = left[i++];
+        }
+        else
+        {
+            arr[k++] = right[j++];
+        }
+    }
+
+    while (i < left.Length)
+    {
+        arr[k++] = left[i++];
+    }
+
+    while (j < right.Length)
+    {
+        arr[k++] = right[j++];
+    }
+}
+
+//////////
+//5. Бинарный поиск
+
+public int BinarySearch(int[] arr, int target)
+{
+    int low = 0;
+    int high = arr.Length - 1;
+
+    while (low <= high)
+    {
+        int mid = low + (high - low) / 2;
+
+        
+        if (arr[mid] == target)
+            return mid;
+
+        
+        if (arr[mid] < target)
+            low = mid + 1;
+        
+        else
+            high = mid - 1;
+    }
+
+    
+    return -1;
+}
